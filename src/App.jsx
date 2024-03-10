@@ -1,12 +1,25 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import PrivateRoute from "./authentication/PrivateRoute";
+import { PrivateRoutes } from "./routes/PrivateRoutes";
+import Navbar from "./components/Navbar";
+import { publicRoute } from "./routes/publicRoutes";
 
 function App() {
   return (
     <>
-      <div>
-        <h1 className="text-3xl font-bold underline">Hello world!</h1>
-        <button className="btn btn-active btn-secondary">Secondary</button>
-      </div>
+      <Navbar>
+        <Routes>
+          {publicRoute.map((route) => (
+            <Route path={route.path} element={<route.Component />}></Route>
+          ))}
+          <Route element={<PrivateRoute />}>
+            {PrivateRoutes.map((route) => (
+              <Route path={route.path} element={<route.Component />}></Route>
+            ))}
+          </Route>
+        </Routes>
+      </Navbar>
     </>
   );
 }
